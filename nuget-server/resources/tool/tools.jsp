@@ -21,6 +21,10 @@
 <c:set var="actualUpdateUrl"><c:url value="${updateUrl}"/></c:set>
 <bs:refreshable containerId="nugetPackagesList" pageUrl="${actualUpdateUrl}">
 <c:set var="installedPluginsCount" value="${fn:length(tools)}"/>
+
+<c:set var="actualInstallerUrl"><c:url value="${installerUrl}"/></c:set>
+
+
 <p>
   TeamCity NuGet plugin requires to configure NuGet.Exe Command Line clients.
   There are
@@ -34,7 +38,7 @@
       <div>There are no installed NuGet.exe</div>
     </c:when>
     <c:otherwise>
-        <table class="dark borderBottom" cellpadding="0" cellspacing="0" style="width: 30em;">
+        <table class="dark borderBottom nugetTools" cellpadding="0" cellspacing="0">
           <thead>
           <tr>
             <th class="header" style="width: 66%">Version</th>
@@ -58,6 +62,12 @@
                 </td>
               </tr>
             </c:forEach>
+             <tr>
+               <td>default (<strong>disabled</strong>)</td>
+               <td>
+                 <a href="#" onclick="return BS.NuGet.Tools.SetDefaultPopup.show();">Change</a>
+               </td>
+             </tr>
           </tbody>
       </table>
     </c:otherwise>
@@ -69,10 +79,36 @@
       NuGet.exe Command Line
     </a>
   </div>
+
+
+  <bs:modalDialog formId="nugetDefaultForm"
+                  title="Select Default NuGet.exe Command Line"
+                  action="${actualInstallerUrl}"
+                  closeCommand="BS.NuGet.Tools.SetDefaultPopup.close();"
+                  saveCommand="BS.NuGet.Tools.SetDefaultPopup.save();">
+
+    <input type="hidden" name="whatToDo" value="setDefault" />
+    <forms:select name="toolId" style="width:15em;">
+      <forms:option value="">-- Please choose version --</forms:option>
+      <c:forEach var="t" items="${tools}">
+        <forms:option value="${t.id}"><c:out value="${t.version}"/></forms:option>
+      </c:forEach>
+    </forms:select>
+    <span class="smallNote">
+      Choose deafult version of NuGet Commandline Tools.
+    </span>
+
+    <div class="popupSaveButtonsBlock">
+      <a href="javascript://" onclick="BS.NuGet.Tools.SetDefaultPopup.closeToolsDialog();" class="cancel">Cancel</a>
+      <input class="submitButton" type="submit" value="Set" />
+      <forms:saving id="installNuGetApplyDefaults"/>
+      <div class="clr"></div>
+    </div>
+  </bs:modalDialog>
+
 </bs:refreshable>
 
 
-<c:set var="actualInstallerUrl"><c:url value="${installerUrl}"/></c:set>
 <bs:modalDialog
         formId="nugetInstallForm"
         title="Install NuGet.exe Command Line"

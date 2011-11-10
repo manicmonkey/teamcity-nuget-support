@@ -38,6 +38,45 @@ BS.NuGet.Tools = {
     })
   },
 
+  SetDefaultPopup : OO.extend(BS.PluginPropertiesForm, OO.extend(BS.AbstractModalDialog, {
+    getContainer : function() {
+      return $('nugetDefaultFormDialog');
+    },
+
+    formElement : function() {
+      return $('nugetDefaultForm');
+    },
+
+    show : function() {
+      this.showCentered();
+      return false;
+    },
+
+    closeToolsDialog : function() {
+      this.close();
+      BS.Util.hide($('installNuGetApplyDefaults'));
+    },
+
+    save : function() {
+      BS.Util.show($('installNuGetApplyDefaults'));
+      BS.FormSaver.save(this, this.formElement().action, OO.extend(BS.ErrorsAwareListener, {
+        onCompleteSave: function(form, responseXML, err) {
+          var wereErrors = BS.XMLResponse.processErrors(responseXML, {}, form.propertiesErrorsHandler);
+          BS.ErrorsAwareListener.onCompleteSave(form, responseXML, err);
+
+          if (!wereErrors) {
+            BS.NuGet.Tools.refreshPackagesList();
+            form.close();
+            BS.Util.hide($('installNuGetApplyDefaults'));
+          } else {
+            BS.Util.reenableForm(form.formElement());
+          }
+        }
+      }));
+      return false;
+    }
+  })),
+
   InstallPopup : OO.extend(BS.PluginPropertiesForm, OO.extend(BS.AbstractModalDialog, {
     getContainer : function() {
       return $('nugetInstallFormDialog');
