@@ -18,6 +18,7 @@ package jetbrains.buildServer.nuget.standalone.server;
 
 import jetbrains.buildServer.nuget.server.feed.server.javaFeed.NuGetODataApplication;
 import org.jetbrains.annotations.NotNull;
+import org.odata4j.producer.resources.ServiceDocumentResource;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +37,15 @@ public class NuGetApplication extends NuGetODataApplication {
   private NuGetApplication(@NotNull final ServerSettings settings) {
     super(new NuGetApplicationProducer(settings));
     mySettings = settings;
+  }
+
+  @Override
+  public Set<Class<?>> getClasses() {
+    Set<Class<?>> classes = super.getClasses();
+    classes.remove(ServiceDocumentResource.class);
+    classes.add(PostNuGetResourceExtension.class);
+    classes.add(EntityRemovalResource.class);
+    return classes;
   }
 
   @Override

@@ -17,6 +17,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jersey/jersey-spring-1.11.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jersey/jettison-1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jersey/jsr311-api-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jersey/mimepull-1.6.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/jersey/jersey-javadoc.zip!/apidocs/jsr311" />

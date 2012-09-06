@@ -28,7 +28,10 @@ import java.io.File;
 public class DefaultSettings implements ServerSettings {
   @NotNull
   public File getPackagesFolder() {
-    return FileUtil.getCanonicalFile(new File("."));
+    String nugetStore = System.getenv("NUGET_STORE");
+    if (nugetStore == null)
+      throw new RuntimeException("Could not look up env variable 'NUGET_STORE'");
+    return FileUtil.getCanonicalFile(new File(nugetStore));
   }
 
   public long getPackagesRefreshInterval() {
