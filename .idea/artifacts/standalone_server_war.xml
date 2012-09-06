@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="standalone-server:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/standalone_server_war</output-path>
+    <root id="archive" name="standalone-server.war">
+      <element id="artifact" artifact-name="standalone-server:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="nuget-feed" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="idea annotations.jar" />
+          <element id="library" level="project" name="Idea-OpenApi" />
+          <element id="library" level="project" name="jersey" />
+          <element id="library" level="project" name="joda-time" />
+          <element id="library" level="project" name="log4j" />
+          <element id="library" level="project" name="odata4j" />
+          <element id="library" level="project" name="xpp3-1.1.4c" />
+          <element id="library" level="project" name="Common-Api" />
+          <element id="library" level="project" name="poi-openxml4j" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
