@@ -24,6 +24,6 @@ import java.io.File;
 public class PackageFileLocationUtil {
 
   public File getPackage(String packageId) {
-    return new File(new DefaultSettings().getPackagesFolder(), packageId + ".nuspec");
+    return new File(new DefaultSettings().getPackagesFolder(), packageId + ".nupkg");
   }
 }
